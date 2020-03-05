@@ -10,14 +10,14 @@ app.get('/', (req, res, next) => {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-app.get('/api/pokemon', (req, res, next) => {
+app.get('/api/teams', (req, res, next) => {
   db.getPokemon()
   .then(response => res.send(response))
   .catch(next)
 })
 
-app.post('/api/pokemon', (req, res, next) => {
-  db.createRow(req.body.name)
+app.post('/api/teams', (req, res, next) => {
+  db.createTeam(req.body.name, req.body.pokemon)
   .then(response => res.send(response))
   .catch(next)
 })

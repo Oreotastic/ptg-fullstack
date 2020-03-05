@@ -7,12 +7,13 @@ client.connect()
 
 const sync = async() => {
   const sql = `
-    DROP TABLE IF EXISTS pokemon;
+    DROP TABLE IF EXISTS teams;
     CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     
-    CREATE TABLE pokemon(
+    CREATE TABLE teams(
       id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-      name VARCHAR
+      name VARCHAR,
+      pokemon text [] NOT NULL
     );
   `
 
@@ -20,19 +21,19 @@ const sync = async() => {
 }
 
 const getPokemon = async() => {
-  const sql = `SELECT * FROM pokemon`
+  const sql = `SELECT * FROM teams`
   const response = await client.query(sql)
   return response.rows
 }
 
-const createRow = async(name) => {
-  const sql = `INSERT INTO pokemon(name) VALUES($1) returning *`
-  const response = await client.query(sql, [name])
+const createTeam = async(name, pokemon) => {
+  const sql = `INSERT INTO teams(name, pokemon) VALUES($1, $2) returning *`
+  const response = await client.query(sql, [name, pokemon])
   return response.rows[0]
 } 
 
 module.exports = {
   sync,
   getPokemon,
-  createRow
+  createTeam
 }
