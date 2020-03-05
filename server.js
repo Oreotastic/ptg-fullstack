@@ -22,7 +22,7 @@ app.post('/api/pokemon', (req, res, next) => {
   .catch(next)
 })
 
-const port = 3000
+const port = process.evn.PORT || 3000
 
 db.sync().then(() => {
   app.listen(port, ()=>{
