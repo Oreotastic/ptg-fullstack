@@ -44,7 +44,7 @@ const App = () => {
 
   return(
     <div>
-      <h1>Hello World</h1>
+      <h1>Team Generator</h1>
       <form onSubmit={onSubmit}>
         <input type="text" value={name} onChange={(el) => setName(el.target.value)} />
         <button>create</button>
