@@ -22,6 +22,18 @@ app.post('/api/teams', (req, res, next) => {
   .catch(next)
 })
 
+app.put('/api/teams/:id', (req, res, next) => {
+  db.updateTeam(req.params.id, req.body.pokemon)
+  .then(response => res.send(response))
+  .catch(next)
+})
+
+app.delete('/api/teams/:id', (req, res, next) => {
+  db.deleteTeam(req.params.id) 
+  .then(response => res.send(response))
+  .catch(next)
+})
+
 const port = process.env.PORT || 3000
 
 db.sync().then(() => {

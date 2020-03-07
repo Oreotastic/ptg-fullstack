@@ -4,39 +4,40 @@ import Team from './Team'
 
 const { useState, useEffect } = React;
 
-const api = `https://pokeapi.co/api/v2`
-
 const App = () => {
   const [teams, setTeams] = useState([])
-  const [pokemon, setPokemon] = useState([])
 
   const [name, setName] = useState('')
 
-  const createTeam = async(name, pokemon) => {
-    console.log(pokemon)
+  const createTeam = async(name) => {
     try {
-      const created = (await axios.post('/api/teams', {name, pokemon: [pokemon]})).data
+      const created = (await axios.post('/api/teams', {name, pokemon: []})).data
       setTeams([...teams, created])
     } catch (error) {
       window.alert(error)
     }
   }
 
+  const deleteTeam = async(id) => {
+    try {
+      await axios.delete(`/api/teams/${id}`)
+      setTeams(teams.filter(team => team.id !== id))
+    } catch (error) {
+      window.alert(error)
+    }
+  }
+
   const onSubmit = (el) => {
-    pokemon
     el.preventDefault()
-    createTeam(name, pokemon)
+    createTeam(name)
   }
 
   useEffect(() => {
     Promise.all([
       axios.get('/api/teams'),
-      axios.get(`${api}/pokemon/ditto/`)
     ])
     .then(response => {
       setTeams(response[0].data)
-      const poke = response[1].data
-      setPokemon({place: 1, id: poke.id, name: poke.name, type: poke.types[0].type.name})
     })
   }, [])
 
@@ -51,11 +52,10 @@ const App = () => {
       <ul>
         {
           teams.map(team => {
-            console.log(team)
             return(
               <li key={team.id}>
-                <p>{team.name}</p>
-                <Team pokemon={team.pokemon} />
+                <p>{team.name} <button onClick={(el) => deleteTeam(team.id)}>X</button></p>
+                <Team setTeams={setTeams} teams={teams} team={team} pokemon={team.pokemon} />
               </li>
             )
           })
