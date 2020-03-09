@@ -10,17 +10,26 @@ const Search = ({setTeams, teams, team, pokemon}) => {
   
   const addRandom = async(el) => {
     let arr = []
+    let promise = []
     el.preventDefault()
     for(let i = 0; i < amount; i++) {
       if(team.pokemon.length < 6) {
         const randInt = Math.floor(Math.random() * (800 - 1) + 1)
-        const data = (await axios.get(`${api}/pokemon/${randInt}`)).data
-        const string = JSON.stringify({id: uuidv4(), name: data.name, type: data.types[0].type.name, sprite: data.sprites.front_default})
-        arr = [...arr, string]
+        const link = axios.get(`${api}/pokemon/${randInt}`)
+        promise = [...promise, link]
       } else {
         return 'team is full'
       }
     }
+
+    await Promise.all(promise)
+    .then(results => {
+      for(let i = 0; i < results.length; i++) {
+        const data = results[i].data
+        const string = JSON.stringify({id: uuidv4(), name: data.name, type: data.types[0].type.name, sprite: data.sprites.front_default})
+        arr = [...arr, string]
+      }
+    })
 
     setTeams(teams.map((item) => {
       if(item.id === team.id) {
