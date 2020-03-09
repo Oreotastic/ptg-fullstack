@@ -5,7 +5,15 @@ import {v4 as uuidv4} from 'uuid'
 
 const Team = ({setTeams, teams, team, pokemon}) => {
 
-  const deletePokemon = async(poke) => {
+  const deletePokemon = async(poke, index) => {
+    poke.pokemon.splice(index, 1)
+    poke.pokemon.map((item, i) => {
+      const json = JSON.parse(item)
+      json.place = `${i}`
+      json.id = uuidv4()
+      const string = JSON.stringify(json)
+      return string
+    })
     setTeams(teams.map(team => {
       if(team.id === poke.id) {
         team.pokemon = poke.pokemon
