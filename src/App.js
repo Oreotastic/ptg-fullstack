@@ -43,24 +43,30 @@ const App = () => {
 
 
   return(
-    <div>
-      <h1>Team Generator</h1>
-      <form onSubmit={onSubmit}>
-        <input type="text" value={name} onChange={(el) => setName(el.target.value)} />
-        <button>create</button>
-      </form>
-      <ul>
-        {
-          teams.map(team => {
-            return(
-              <li key={team.id}>
-                <p>{team.name} <button onClick={(el) => deleteTeam(team.id)}>X</button></p>
-                <Team setTeams={setTeams} teams={teams} team={team} pokemon={team.pokemon} />
-              </li>
-            )
-          })
-        }
-      </ul>
+    <div className="container app">
+      <header>
+        <h1>Team Generator</h1>
+      </header>
+      <div className="container main">
+        <form onSubmit={onSubmit}>
+          <input type="text" value={name} onChange={(el) => setName(el.target.value)} />
+          <button>create</button>
+        </form>
+        <div className="container teamList">
+          <ul>
+            {
+              teams.map(team => {
+                return(
+                  <li className="teamListItem" key={team.id}>
+                    <p className="teamName">{team.name} <button className="delete" onClick={(el) => deleteTeam(team.id)}>X</button></p>
+                    <Team setTeams={setTeams} teams={teams} team={team} pokemon={team.pokemon} />
+                  </li>
+                )
+              })
+            }
+          </ul>
+        </div>
+      </div>
     </div>
   )
 }

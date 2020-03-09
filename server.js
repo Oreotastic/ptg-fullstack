@@ -4,6 +4,7 @@ const db = require('./db')
 const path = require('path')
 
 app.use(express.json())
+app.use('/assets', express.static(path.join(__dirname, 'assets')))
 app.use('/dist', express.static(path.join(__dirname, 'dist')))
 
 app.get('/', (req, res, next) => {

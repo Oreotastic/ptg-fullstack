@@ -1,0 +1,75 @@
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+header {
+  background: #fff;
+  position: absolute;
+  left: 0%;
+  right: 0;
+  top: 0;
+}
+
+#root {
+  background-image: url('https://lh3.googleusercontent.com/Bz9708ZAzDnCTokSd0Klsw8ZgGbUu6WsTyQnCaELSolP-MOBaKYTXvdFSr9lmCqmjb53XGclD7RZI0DksDLw=s400');
+  background-size: auto;
+  height: 200vh;
+}
+
+.app {
+  text-align: center;
+  margin: auto;
+}
+
+.main {
+  padding: 0;
+  padding-top: 100px; 
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+.teamName {
+  font-size: 4vw;
+}
+
+ .delete {
+  font-size: 3vw;
+}
+
+.random {
+  width: 50px;
+}
+
+.teamListItem {
+  background: #fff;
+  margin: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  border: 5px solid rgb(179, 33, 33);
+}
+
+.pokemon ul{
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  justify-content: space-between;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.pokemon ul p {
+  margin: 0;
+}
+
+.pokemon ul li {
+  padding: 5px;
+}
+
+.sprite{
+  border-radius: 5px;
+  background: rgb(255, 217, 0);
+  border: solid 3px rgb(179, 33, 33);
+}

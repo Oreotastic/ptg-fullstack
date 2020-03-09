@@ -1,6 +1,7 @@
 import React from 'react'
 import Search from './Search'
 import axios from 'axios'
+import {v4 as uuidv4} from 'uuid'
 
 const Team = ({setTeams, teams, team, pokemon}) => {
 
@@ -9,11 +10,10 @@ const Team = ({setTeams, teams, team, pokemon}) => {
     poke.pokemon.map((item, i) => {
       const json = JSON.parse(item)
       json.place = `${i}`
-      json.id = `${poke.name}-${i}`
+      json.id = uuidv4()
       const string = JSON.stringify(json)
       return string
     })
-    console.log(poke.pokemon)
     setTeams(teams.map(team => {
       if(team.id === poke.id) {
         team.pokemon = poke.pokemon
@@ -25,23 +25,27 @@ const Team = ({setTeams, teams, team, pokemon}) => {
 
     await axios.put(`/api/teams/${poke.id}`, {pokemon: poke.pokemon})
   }
-
   return (
     <div>
-      <h4>Team</h4>
+      <h4>{`Lineup (${team.pokemon.length})`}</h4>
       <Search setTeams={setTeams} teams={teams} team={team} pokemon={pokemon} />
-      <ul>
-        {
-          pokemon.map((pokemon, index) => {
-            const poke = JSON.parse(pokemon)
-            return(
-              <li key={`${team.name}-${index}`}>
-                <p>{poke.name} <span>{poke.type}</span> <button onClick={()=>deletePokemon(team, index)}>X</button></p>
-              </li>
-            )
-          })
-        }
-      </ul>
+      <div className="container pokemon">
+        <ul>
+          {
+            pokemon.map((pokemon, index) => {
+              const poke = JSON.parse(pokemon)
+              return(
+                <li key={uuidv4()}>
+                  <img className="sprite" src={poke.sprite} height="100px"></img>
+                  <p>Name: {poke.name}</p> 
+                  <p>Type: {poke.type}</p> 
+                  <button onClick={()=>deletePokemon(team, index)}>X</button>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
     </div>
   )
 }
