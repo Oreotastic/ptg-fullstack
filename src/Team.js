@@ -9,7 +9,6 @@ const Team = ({setTeams, teams, team, pokemon}) => {
     poke.pokemon.splice(index, 1)
     poke.pokemon.map((item, i) => {
       const json = JSON.parse(item)
-      json.place = `${i}`
       json.id = uuidv4()
       const string = JSON.stringify(json)
       return string
